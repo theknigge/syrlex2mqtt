@@ -211,6 +211,9 @@ async function sendMQTTSensorDiscoveryMessage(mqttclient, mqttDevice, sensorname
         unique_id: mqttDevice.identifier() + "_" + sensorname,
         device: mqttDevice
       };
+  if (sensorname === "total_water_consumption") {
+        payload.state_class = "total_increasing";
+  }
   removeNullProperties(payload);
   await mqttclient.publish(topic, JSON.stringify(payload), {retain: true})
 }
